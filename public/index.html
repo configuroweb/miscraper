@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datos Escrapeados</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1>Datos Escrapeados</h1>
+  <div id="data"></div>
+</div>
+
+<script>
+fetch('/data/1')  // Ajusta el número de página según sea necesario
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('data');
+    data.forEach(post => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">${post.title}</h5>
+          <p class="card-text">${post.description}</p>
+          <a href="${post.link}" class="card-link">Leer más</a>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  })
+  .catch(err => console.error('Error cargando los datos:', err));
+</script>
+</body>
+</html>
